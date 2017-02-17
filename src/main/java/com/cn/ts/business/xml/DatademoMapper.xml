@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.ts.business.dao.DatademoMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.ts.business.model.Datademo" >
+    <result column="DATA1" property="data1" jdbcType="VARCHAR" />
+    <result column="DATA2" property="data2" jdbcType="VARCHAR" />
+    <result column="DATA3" property="data3" jdbcType="VARCHAR" />
+    <result column="DATA4" property="data4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    DATA1, DATA2, DATA3, DATA4
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cn.ts.business.model.DatademoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from EFOUR.DATADEMO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.cn.ts.business.model.DatademoExample" >
+    delete from EFOUR.DATADEMO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cn.ts.business.model.Datademo" >
+    insert into EFOUR.DATADEMO (DATA1, DATA2, DATA3, 
+      DATA4)
+    values (#{data1,jdbcType=VARCHAR}, #{data2,jdbcType=VARCHAR}, #{data3,jdbcType=VARCHAR}, 
+      #{data4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.ts.business.model.Datademo" >
+    insert into EFOUR.DATADEMO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="data1 != null" >
+        DATA1,
+      </if>
+      <if test="data2 != null" >
+        DATA2,
+      </if>
+      <if test="data3 != null" >
+        DATA3,
+      </if>
+      <if test="data4 != null" >
+        DATA4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="data1 != null" >
+        #{data1,jdbcType=VARCHAR},
+      </if>
+      <if test="data2 != null" >
+        #{data2,jdbcType=VARCHAR},
+      </if>
+      <if test="data3 != null" >
+        #{data3,jdbcType=VARCHAR},
+      </if>
+      <if test="data4 != null" >
+        #{data4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cn.ts.business.model.DatademoExample" resultType="java.lang.Integer" >
+    select count(*) from EFOUR.DATADEMO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update EFOUR.DATADEMO
+    <set >
+      <if test="record.data1 != null" >
+        DATA1 = #{record.data1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.data2 != null" >
+        DATA2 = #{record.data2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.data3 != null" >
+        DATA3 = #{record.data3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.data4 != null" >
+        DATA4 = #{record.data4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update EFOUR.DATADEMO
+    set DATA1 = #{record.data1,jdbcType=VARCHAR},
+      DATA2 = #{record.data2,jdbcType=VARCHAR},
+      DATA3 = #{record.data3,jdbcType=VARCHAR},
+      DATA4 = #{record.data4,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

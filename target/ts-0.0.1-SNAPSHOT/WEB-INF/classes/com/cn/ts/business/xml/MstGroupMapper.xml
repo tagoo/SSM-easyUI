@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.ts.business.dao.MstGroupMapper" >
+  <resultMap id="queryForListMap" type="com.cn.ts.business.model.MstGroup">
+  	<id column="group_id" property="groupId" jdbcType="VARCHAR"/>
+  	<collection property="menus" javaType="java.util.List" ofType="com.cn.ts.business.model.SysMenu">
+  		<id column="menu_id" property="menuId" jdbcType="VARCHAR"/>  	
+  	</collection>
+  </resultMap>
+  <select id="queryForList" resultMap="queryForListMap">
+  	SELECT
+	  mg.group_id,
+      sm.menu_id
+	FROM mst_group mg
+	INNER JOIN mst_group_menu mgm ON (
+	      mg.group_id = mgm.group_id
+	  AND mgm.delete_flag = 'N'
+	)
+	INNER JOIN sys_menu sm ON (
+		  sm.menu_id = mgm.menu_id
+	  AND sm.delete_flag = 'N'
+	  AND sm.menu_level = '0'
+	)
+	WHERE mg.group_id = #{groupId,jdbcType=VARCHAR}
+	  AND mg.delete_flag = 'N'
+	ORDER BY sm.menu_id
+  </select>
+  <resultMap id="BaseResultMap" type="com.cn.ts.business.model.MstGroup" >
+    <id column="group_id" property="groupId" jdbcType="VARCHAR" />
+    <result column="group_name" property="groupName" jdbcType="VARCHAR" />
+    <result column="dsp_order" property="dspOrder" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="attribute1" property="attribute1" jdbcType="VARCHAR" />
+    <result column="attribute2" property="attribute2" jdbcType="VARCHAR" />
+    <result column="attribute3" property="attribute3" jdbcType="VARCHAR" />
+    <result column="attribute4" property="attribute4" jdbcType="VARCHAR" />
+    <result column="attribute5" property="attribute5" jdbcType="VARCHAR" />
+    <result column="attribute6" property="attribute6" jdbcType="VARCHAR" />
+    <result column="attribute7" property="attribute7" jdbcType="VARCHAR" />
+    <result column="attribute8" property="attribute8" jdbcType="VARCHAR" />
+    <result column="attribute9" property="attribute9" jdbcType="VARCHAR" />
+    <result column="attribute10" property="attribute10" jdbcType="VARCHAR" />
+    <result column="ins_date" property="insDate" jdbcType="TIMESTAMP" />
+    <result column="ins_pid" property="insPid" jdbcType="VARCHAR" />
+    <result column="ins_user_id" property="insUserId" jdbcType="VARCHAR" />
+    <result column="upd_date" property="updDate" jdbcType="TIMESTAMP" />
+    <result column="upd_pid" property="updPid" jdbcType="VARCHAR" />
+    <result column="upd_user_id" property="updUserId" jdbcType="VARCHAR" />
+    <result column="delete_date" property="deleteDate" jdbcType="TIMESTAMP" />
+    <result column="delete_pid" property="deletePid" jdbcType="VARCHAR" />
+    <result column="delete_user_id" property="deleteUserId" jdbcType="VARCHAR" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    group_id, group_name, dsp_order, remarks, attribute1, attribute2, attribute3, attribute4, 
+    attribute5, attribute6, attribute7, attribute8, attribute9, attribute10, ins_date, 
+    ins_pid, ins_user_id, upd_date, upd_pid, upd_user_id, delete_date, delete_pid, delete_user_id, 
+    delete_flag
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cn.ts.business.model.MstGroupExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mst_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from mst_group
+    where group_id = #{groupId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from mst_group
+    where group_id = #{groupId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cn.ts.business.model.MstGroupExample" >
+    delete from mst_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cn.ts.business.model.MstGroup" >
+    insert into mst_group (group_id, group_name, dsp_order, 
+      remarks, attribute1, attribute2, 
+      attribute3, attribute4, attribute5, 
+      attribute6, attribute7, attribute8, 
+      attribute9, attribute10, ins_date, 
+      ins_pid, ins_user_id, upd_date, 
+      upd_pid, upd_user_id, delete_date, 
+      delete_pid, delete_user_id, delete_flag
+      )
+    values (#{groupId,jdbcType=VARCHAR}, #{groupName,jdbcType=VARCHAR}, #{dspOrder,jdbcType=VARCHAR}, 
+      #{remarks,jdbcType=VARCHAR}, #{attribute1,jdbcType=VARCHAR}, #{attribute2,jdbcType=VARCHAR}, 
+      #{attribute3,jdbcType=VARCHAR}, #{attribute4,jdbcType=VARCHAR}, #{attribute5,jdbcType=VARCHAR}, 
+      #{attribute6,jdbcType=VARCHAR}, #{attribute7,jdbcType=VARCHAR}, #{attribute8,jdbcType=VARCHAR}, 
+      #{attribute9,jdbcType=VARCHAR}, #{attribute10,jdbcType=VARCHAR}, #{insDate,jdbcType=TIMESTAMP}, 
+      #{insPid,jdbcType=VARCHAR}, #{insUserId,jdbcType=VARCHAR}, #{updDate,jdbcType=TIMESTAMP}, 
+      #{updPid,jdbcType=VARCHAR}, #{updUserId,jdbcType=VARCHAR}, #{deleteDate,jdbcType=TIMESTAMP}, 
+      #{deletePid,jdbcType=VARCHAR}, #{deleteUserId,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.ts.business.model.MstGroup" >
+    insert into mst_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="groupId != null" >
+        group_id,
+      </if>
+      <if test="groupName != null" >
+        group_name,
+      </if>
+      <if test="dspOrder != null" >
+        dsp_order,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="attribute1 != null" >
+        attribute1,
+      </if>
+      <if test="attribute2 != null" >
+        attribute2,
+      </if>
+      <if test="attribute3 != null" >
+        attribute3,
+      </if>
+      <if test="attribute4 != null" >
+        attribute4,
+      </if>
+      <if test="attribute5 != null" >
+        attribute5,
+      </if>
+      <if test="attribute6 != null" >
+        attribute6,
+      </if>
+      <if test="attribute7 != null" >
+        attribute7,
+      </if>
+      <if test="attribute8 != null" >
+        attribute8,
+      </if>
+      <if test="attribute9 != null" >
+        attribute9,
+      </if>
+      <if test="attribute10 != null" >
+        attribute10,
+      </if>
+      <if test="insDate != null" >
+        ins_date,
+      </if>
+      <if test="insPid != null" >
+        ins_pid,
+      </if>
+      <if test="insUserId != null" >
+        ins_user_id,
+      </if>
+      <if test="updDate != null" >
+        upd_date,
+      </if>
+      <if test="updPid != null" >
+        upd_pid,
+      </if>
+      <if test="updUserId != null" >
+        upd_user_id,
+      </if>
+      <if test="deleteDate != null" >
+        delete_date,
+      </if>
+      <if test="deletePid != null" >
+        delete_pid,
+      </if>
+      <if test="deleteUserId != null" >
+        delete_user_id,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="groupId != null" >
+        #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="groupName != null" >
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="dspOrder != null" >
+        #{dspOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute1 != null" >
+        #{attribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute2 != null" >
+        #{attribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute3 != null" >
+        #{attribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute4 != null" >
+        #{attribute4,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute5 != null" >
+        #{attribute5,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute6 != null" >
+        #{attribute6,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute7 != null" >
+        #{attribute7,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute8 != null" >
+        #{attribute8,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute9 != null" >
+        #{attribute9,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute10 != null" >
+        #{attribute10,jdbcType=VARCHAR},
+      </if>
+      <if test="insDate != null" >
+        #{insDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="insPid != null" >
+        #{insPid,jdbcType=VARCHAR},
+      </if>
+      <if test="insUserId != null" >
+        #{insUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updDate != null" >
+        #{updDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updPid != null" >
+        #{updPid,jdbcType=VARCHAR},
+      </if>
+      <if test="updUserId != null" >
+        #{updUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteDate != null" >
+        #{deleteDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletePid != null" >
+        #{deletePid,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteUserId != null" >
+        #{deleteUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cn.ts.business.model.MstGroupExample" resultType="java.lang.Integer" >
+    select count(*) from mst_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update mst_group
+    <set >
+      <if test="record.groupId != null" >
+        group_id = #{record.groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupName != null" >
+        group_name = #{record.groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dspOrder != null" >
+        dsp_order = #{record.dspOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remarks != null" >
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute1 != null" >
+        attribute1 = #{record.attribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute2 != null" >
+        attribute2 = #{record.attribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute3 != null" >
+        attribute3 = #{record.attribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute4 != null" >
+        attribute4 = #{record.attribute4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute5 != null" >
+        attribute5 = #{record.attribute5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute6 != null" >
+        attribute6 = #{record.attribute6,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute7 != null" >
+        attribute7 = #{record.attribute7,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute8 != null" >
+        attribute8 = #{record.attribute8,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute9 != null" >
+        attribute9 = #{record.attribute9,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute10 != null" >
+        attribute10 = #{record.attribute10,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insDate != null" >
+        ins_date = #{record.insDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.insPid != null" >
+        ins_pid = #{record.insPid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insUserId != null" >
+        ins_user_id = #{record.insUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updDate != null" >
+        upd_date = #{record.updDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updPid != null" >
+        upd_pid = #{record.updPid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updUserId != null" >
+        upd_user_id = #{record.updUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteDate != null" >
+        delete_date = #{record.deleteDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletePid != null" >
+        delete_pid = #{record.deletePid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteUserId != null" >
+        delete_user_id = #{record.deleteUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteFlag != null" >
+        delete_flag = #{record.deleteFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update mst_group
+    set group_id = #{record.groupId,jdbcType=VARCHAR},
+      group_name = #{record.groupName,jdbcType=VARCHAR},
+      dsp_order = #{record.dspOrder,jdbcType=VARCHAR},
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      attribute1 = #{record.attribute1,jdbcType=VARCHAR},
+      attribute2 = #{record.attribute2,jdbcType=VARCHAR},
+      attribute3 = #{record.attribute3,jdbcType=VARCHAR},
+      attribute4 = #{record.attribute4,jdbcType=VARCHAR},
+      attribute5 = #{record.attribute5,jdbcType=VARCHAR},
+      attribute6 = #{record.attribute6,jdbcType=VARCHAR},
+      attribute7 = #{record.attribute7,jdbcType=VARCHAR},
+      attribute8 = #{record.attribute8,jdbcType=VARCHAR},
+      attribute9 = #{record.attribute9,jdbcType=VARCHAR},
+      attribute10 = #{record.attribute10,jdbcType=VARCHAR},
+      ins_date = #{record.insDate,jdbcType=TIMESTAMP},
+      ins_pid = #{record.insPid,jdbcType=VARCHAR},
+      ins_user_id = #{record.insUserId,jdbcType=VARCHAR},
+      upd_date = #{record.updDate,jdbcType=TIMESTAMP},
+      upd_pid = #{record.updPid,jdbcType=VARCHAR},
+      upd_user_id = #{record.updUserId,jdbcType=VARCHAR},
+      delete_date = #{record.deleteDate,jdbcType=TIMESTAMP},
+      delete_pid = #{record.deletePid,jdbcType=VARCHAR},
+      delete_user_id = #{record.deleteUserId,jdbcType=VARCHAR},
+      delete_flag = #{record.deleteFlag,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.ts.business.model.MstGroup" >
+    update mst_group
+    <set >
+      <if test="groupName != null" >
+        group_name = #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="dspOrder != null" >
+        dsp_order = #{dspOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute1 != null" >
+        attribute1 = #{attribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute2 != null" >
+        attribute2 = #{attribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute3 != null" >
+        attribute3 = #{attribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute4 != null" >
+        attribute4 = #{attribute4,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute5 != null" >
+        attribute5 = #{attribute5,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute6 != null" >
+        attribute6 = #{attribute6,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute7 != null" >
+        attribute7 = #{attribute7,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute8 != null" >
+        attribute8 = #{attribute8,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute9 != null" >
+        attribute9 = #{attribute9,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute10 != null" >
+        attribute10 = #{attribute10,jdbcType=VARCHAR},
+      </if>
+      <if test="insDate != null" >
+        ins_date = #{insDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="insPid != null" >
+        ins_pid = #{insPid,jdbcType=VARCHAR},
+      </if>
+      <if test="insUserId != null" >
+        ins_user_id = #{insUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updDate != null" >
+        upd_date = #{updDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updPid != null" >
+        upd_pid = #{updPid,jdbcType=VARCHAR},
+      </if>
+      <if test="updUserId != null" >
+        upd_user_id = #{updUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteDate != null" >
+        delete_date = #{deleteDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletePid != null" >
+        delete_pid = #{deletePid,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteUserId != null" >
+        delete_user_id = #{deleteUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where group_id = #{groupId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.ts.business.model.MstGroup" >
+    update mst_group
+    set group_name = #{groupName,jdbcType=VARCHAR},
+      dsp_order = #{dspOrder,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      attribute1 = #{attribute1,jdbcType=VARCHAR},
+      attribute2 = #{attribute2,jdbcType=VARCHAR},
+      attribute3 = #{attribute3,jdbcType=VARCHAR},
+      attribute4 = #{attribute4,jdbcType=VARCHAR},
+      attribute5 = #{attribute5,jdbcType=VARCHAR},
+      attribute6 = #{attribute6,jdbcType=VARCHAR},
+      attribute7 = #{attribute7,jdbcType=VARCHAR},
+      attribute8 = #{attribute8,jdbcType=VARCHAR},
+      attribute9 = #{attribute9,jdbcType=VARCHAR},
+      attribute10 = #{attribute10,jdbcType=VARCHAR},
+      ins_date = #{insDate,jdbcType=TIMESTAMP},
+      ins_pid = #{insPid,jdbcType=VARCHAR},
+      ins_user_id = #{insUserId,jdbcType=VARCHAR},
+      upd_date = #{updDate,jdbcType=TIMESTAMP},
+      upd_pid = #{updPid,jdbcType=VARCHAR},
+      upd_user_id = #{updUserId,jdbcType=VARCHAR},
+      delete_date = #{deleteDate,jdbcType=TIMESTAMP},
+      delete_pid = #{deletePid,jdbcType=VARCHAR},
+      delete_user_id = #{deleteUserId,jdbcType=VARCHAR},
+      delete_flag = #{deleteFlag,jdbcType=CHAR}
+    where group_id = #{groupId,jdbcType=VARCHAR}
+  </update>
+</mapper>

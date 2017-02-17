@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.ts.business.dao.MstCustomerMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.ts.business.model.MstCustomer" >
+    <id column="customer_code" property="customerCode" jdbcType="VARCHAR" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="customer_short_name" property="customerShortName" jdbcType="VARCHAR" />
+    <result column="customer_area_no" property="customerAreaNo" jdbcType="VARCHAR" />
+    <result column="customer_place_no" property="customerPlaceNo" jdbcType="VARCHAR" />
+    <result column="customer_address" property="customerAddress" jdbcType="VARCHAR" />
+    <result column="customer_atten" property="customerAtten" jdbcType="VARCHAR" />
+    <result column="customer_atten_tel" property="customerAttenTel" jdbcType="VARCHAR" />
+    <result column="share_flag" property="shareFlag" jdbcType="VARCHAR" />
+    <result column="company_code" property="companyCode" jdbcType="VARCHAR" />
+    <result column="sale_code" property="saleCode" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="dsp_order" property="dspOrder" jdbcType="VARCHAR" />
+    <result column="attribute1" property="attribute1" jdbcType="VARCHAR" />
+    <result column="attribute2" property="attribute2" jdbcType="VARCHAR" />
+    <result column="attribute3" property="attribute3" jdbcType="VARCHAR" />
+    <result column="attribute4" property="attribute4" jdbcType="VARCHAR" />
+    <result column="attribute5" property="attribute5" jdbcType="VARCHAR" />
+    <result column="attribute6" property="attribute6" jdbcType="VARCHAR" />
+    <result column="attribute7" property="attribute7" jdbcType="VARCHAR" />
+    <result column="attribute8" property="attribute8" jdbcType="VARCHAR" />
+    <result column="attribute9" property="attribute9" jdbcType="VARCHAR" />
+    <result column="attribute10" property="attribute10" jdbcType="VARCHAR" />
+    <result column="ins_date" property="insDate" jdbcType="TIMESTAMP" />
+    <result column="ins_user_id" property="insUserId" jdbcType="VARCHAR" />
+    <result column="upd_date" property="updDate" jdbcType="TIMESTAMP" />
+    <result column="upd_user_id" property="updUserId" jdbcType="VARCHAR" />
+    <result column="del_date" property="delDate" jdbcType="TIMESTAMP" />
+    <result column="del_user_id" property="delUserId" jdbcType="VARCHAR" />
+    <result column="delete_flg" property="deleteFlg" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    customer_code, customer_name, customer_short_name, customer_area_no, customer_place_no, 
+    customer_address, customer_atten, customer_atten_tel, share_flag, company_code, sale_code, 
+    remarks, dsp_order, attribute1, attribute2, attribute3, attribute4, attribute5, attribute6, 
+    attribute7, attribute8, attribute9, attribute10, ins_date, ins_user_id, upd_date, 
+    upd_user_id, del_date, del_user_id, delete_flg
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cn.ts.business.model.MstCustomerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mst_customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from mst_customer
+    where customer_code = #{customerCode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from mst_customer
+    where customer_code = #{customerCode,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cn.ts.business.model.MstCustomerExample" >
+    delete from mst_customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cn.ts.business.model.MstCustomer" >
+    insert into mst_customer (customer_code, customer_name, customer_short_name, 
+      customer_area_no, customer_place_no, customer_address, 
+      customer_atten, customer_atten_tel, share_flag, 
+      company_code, sale_code, remarks, 
+      dsp_order, attribute1, attribute2, 
+      attribute3, attribute4, attribute5, 
+      attribute6, attribute7, attribute8, 
+      attribute9, attribute10, ins_date, 
+      ins_user_id, upd_date, upd_user_id, 
+      del_date, del_user_id, delete_flg
+      )
+    values (#{customerCode,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}, #{customerShortName,jdbcType=VARCHAR}, 
+      #{customerAreaNo,jdbcType=VARCHAR}, #{customerPlaceNo,jdbcType=VARCHAR}, #{customerAddress,jdbcType=VARCHAR}, 
+      #{customerAtten,jdbcType=VARCHAR}, #{customerAttenTel,jdbcType=VARCHAR}, #{shareFlag,jdbcType=VARCHAR}, 
+      #{companyCode,jdbcType=VARCHAR}, #{saleCode,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
+      #{dspOrder,jdbcType=VARCHAR}, #{attribute1,jdbcType=VARCHAR}, #{attribute2,jdbcType=VARCHAR}, 
+      #{attribute3,jdbcType=VARCHAR}, #{attribute4,jdbcType=VARCHAR}, #{attribute5,jdbcType=VARCHAR}, 
+      #{attribute6,jdbcType=VARCHAR}, #{attribute7,jdbcType=VARCHAR}, #{attribute8,jdbcType=VARCHAR}, 
+      #{attribute9,jdbcType=VARCHAR}, #{attribute10,jdbcType=VARCHAR}, #{insDate,jdbcType=TIMESTAMP}, 
+      #{insUserId,jdbcType=VARCHAR}, #{updDate,jdbcType=TIMESTAMP}, #{updUserId,jdbcType=VARCHAR}, 
+      #{delDate,jdbcType=TIMESTAMP}, #{delUserId,jdbcType=VARCHAR}, #{deleteFlg,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.ts.business.model.MstCustomer" >
+    insert into mst_customer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customerCode != null" >
+        customer_code,
+      </if>
+      <if test="customerName != null" >
+        customer_name,
+      </if>
+      <if test="customerShortName != null" >
+        customer_short_name,
+      </if>
+      <if test="customerAreaNo != null" >
+        customer_area_no,
+      </if>
+      <if test="customerPlaceNo != null" >
+        customer_place_no,
+      </if>
+      <if test="customerAddress != null" >
+        customer_address,
+      </if>
+      <if test="customerAtten != null" >
+        customer_atten,
+      </if>
+      <if test="customerAttenTel != null" >
+        customer_atten_tel,
+      </if>
+      <if test="shareFlag != null" >
+        share_flag,
+      </if>
+      <if test="companyCode != null" >
+        company_code,
+      </if>
+      <if test="saleCode != null" >
+        sale_code,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="dspOrder != null" >
+        dsp_order,
+      </if>
+      <if test="attribute1 != null" >
+        attribute1,
+      </if>
+      <if test="attribute2 != null" >
+        attribute2,
+      </if>
+      <if test="attribute3 != null" >
+        attribute3,
+      </if>
+      <if test="attribute4 != null" >
+        attribute4,
+      </if>
+      <if test="attribute5 != null" >
+        attribute5,
+      </if>
+      <if test="attribute6 != null" >
+        attribute6,
+      </if>
+      <if test="attribute7 != null" >
+        attribute7,
+      </if>
+      <if test="attribute8 != null" >
+        attribute8,
+      </if>
+      <if test="attribute9 != null" >
+        attribute9,
+      </if>
+      <if test="attribute10 != null" >
+        attribute10,
+      </if>
+      <if test="insDate != null" >
+        ins_date,
+      </if>
+      <if test="insUserId != null" >
+        ins_user_id,
+      </if>
+      <if test="updDate != null" >
+        upd_date,
+      </if>
+      <if test="updUserId != null" >
+        upd_user_id,
+      </if>
+      <if test="delDate != null" >
+        del_date,
+      </if>
+      <if test="delUserId != null" >
+        del_user_id,
+      </if>
+      <if test="deleteFlg != null" >
+        delete_flg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customerCode != null" >
+        #{customerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerShortName != null" >
+        #{customerShortName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAreaNo != null" >
+        #{customerAreaNo,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPlaceNo != null" >
+        #{customerPlaceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAddress != null" >
+        #{customerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAtten != null" >
+        #{customerAtten,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAttenTel != null" >
+        #{customerAttenTel,jdbcType=VARCHAR},
+      </if>
+      <if test="shareFlag != null" >
+        #{shareFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCode != null" >
+        #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="saleCode != null" >
+        #{saleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="dspOrder != null" >
+        #{dspOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute1 != null" >
+        #{attribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute2 != null" >
+        #{attribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute3 != null" >
+        #{attribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute4 != null" >
+        #{attribute4,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute5 != null" >
+        #{attribute5,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute6 != null" >
+        #{attribute6,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute7 != null" >
+        #{attribute7,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute8 != null" >
+        #{attribute8,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute9 != null" >
+        #{attribute9,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute10 != null" >
+        #{attribute10,jdbcType=VARCHAR},
+      </if>
+      <if test="insDate != null" >
+        #{insDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="insUserId != null" >
+        #{insUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updDate != null" >
+        #{updDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updUserId != null" >
+        #{updUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="delDate != null" >
+        #{delDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delUserId != null" >
+        #{delUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlg != null" >
+        #{deleteFlg,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cn.ts.business.model.MstCustomerExample" resultType="java.lang.Integer" >
+    select count(*) from mst_customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update mst_customer
+    <set >
+      <if test="record.customerCode != null" >
+        customer_code = #{record.customerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerName != null" >
+        customer_name = #{record.customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerShortName != null" >
+        customer_short_name = #{record.customerShortName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerAreaNo != null" >
+        customer_area_no = #{record.customerAreaNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerPlaceNo != null" >
+        customer_place_no = #{record.customerPlaceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerAddress != null" >
+        customer_address = #{record.customerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerAtten != null" >
+        customer_atten = #{record.customerAtten,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerAttenTel != null" >
+        customer_atten_tel = #{record.customerAttenTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shareFlag != null" >
+        share_flag = #{record.shareFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyCode != null" >
+        company_code = #{record.companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saleCode != null" >
+        sale_code = #{record.saleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remarks != null" >
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dspOrder != null" >
+        dsp_order = #{record.dspOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute1 != null" >
+        attribute1 = #{record.attribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute2 != null" >
+        attribute2 = #{record.attribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute3 != null" >
+        attribute3 = #{record.attribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute4 != null" >
+        attribute4 = #{record.attribute4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute5 != null" >
+        attribute5 = #{record.attribute5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute6 != null" >
+        attribute6 = #{record.attribute6,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute7 != null" >
+        attribute7 = #{record.attribute7,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute8 != null" >
+        attribute8 = #{record.attribute8,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute9 != null" >
+        attribute9 = #{record.attribute9,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute10 != null" >
+        attribute10 = #{record.attribute10,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insDate != null" >
+        ins_date = #{record.insDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.insUserId != null" >
+        ins_user_id = #{record.insUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updDate != null" >
+        upd_date = #{record.updDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updUserId != null" >
+        upd_user_id = #{record.updUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.delDate != null" >
+        del_date = #{record.delDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delUserId != null" >
+        del_user_id = #{record.delUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteFlg != null" >
+        delete_flg = #{record.deleteFlg,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update mst_customer
+    set customer_code = #{record.customerCode,jdbcType=VARCHAR},
+      customer_name = #{record.customerName,jdbcType=VARCHAR},
+      customer_short_name = #{record.customerShortName,jdbcType=VARCHAR},
+      customer_area_no = #{record.customerAreaNo,jdbcType=VARCHAR},
+      customer_place_no = #{record.customerPlaceNo,jdbcType=VARCHAR},
+      customer_address = #{record.customerAddress,jdbcType=VARCHAR},
+      customer_atten = #{record.customerAtten,jdbcType=VARCHAR},
+      customer_atten_tel = #{record.customerAttenTel,jdbcType=VARCHAR},
+      share_flag = #{record.shareFlag,jdbcType=VARCHAR},
+      company_code = #{record.companyCode,jdbcType=VARCHAR},
+      sale_code = #{record.saleCode,jdbcType=VARCHAR},
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      dsp_order = #{record.dspOrder,jdbcType=VARCHAR},
+      attribute1 = #{record.attribute1,jdbcType=VARCHAR},
+      attribute2 = #{record.attribute2,jdbcType=VARCHAR},
+      attribute3 = #{record.attribute3,jdbcType=VARCHAR},
+      attribute4 = #{record.attribute4,jdbcType=VARCHAR},
+      attribute5 = #{record.attribute5,jdbcType=VARCHAR},
+      attribute6 = #{record.attribute6,jdbcType=VARCHAR},
+      attribute7 = #{record.attribute7,jdbcType=VARCHAR},
+      attribute8 = #{record.attribute8,jdbcType=VARCHAR},
+      attribute9 = #{record.attribute9,jdbcType=VARCHAR},
+      attribute10 = #{record.attribute10,jdbcType=VARCHAR},
+      ins_date = #{record.insDate,jdbcType=TIMESTAMP},
+      ins_user_id = #{record.insUserId,jdbcType=VARCHAR},
+      upd_date = #{record.updDate,jdbcType=TIMESTAMP},
+      upd_user_id = #{record.updUserId,jdbcType=VARCHAR},
+      del_date = #{record.delDate,jdbcType=TIMESTAMP},
+      del_user_id = #{record.delUserId,jdbcType=VARCHAR},
+      delete_flg = #{record.deleteFlg,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.ts.business.model.MstCustomer" >
+    update mst_customer
+    <set >
+      <if test="customerName != null" >
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerShortName != null" >
+        customer_short_name = #{customerShortName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAreaNo != null" >
+        customer_area_no = #{customerAreaNo,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPlaceNo != null" >
+        customer_place_no = #{customerPlaceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAddress != null" >
+        customer_address = #{customerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAtten != null" >
+        customer_atten = #{customerAtten,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAttenTel != null" >
+        customer_atten_tel = #{customerAttenTel,jdbcType=VARCHAR},
+      </if>
+      <if test="shareFlag != null" >
+        share_flag = #{shareFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCode != null" >
+        company_code = #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="saleCode != null" >
+        sale_code = #{saleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="dspOrder != null" >
+        dsp_order = #{dspOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute1 != null" >
+        attribute1 = #{attribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute2 != null" >
+        attribute2 = #{attribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute3 != null" >
+        attribute3 = #{attribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute4 != null" >
+        attribute4 = #{attribute4,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute5 != null" >
+        attribute5 = #{attribute5,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute6 != null" >
+        attribute6 = #{attribute6,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute7 != null" >
+        attribute7 = #{attribute7,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute8 != null" >
+        attribute8 = #{attribute8,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute9 != null" >
+        attribute9 = #{attribute9,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute10 != null" >
+        attribute10 = #{attribute10,jdbcType=VARCHAR},
+      </if>
+      <if test="insDate != null" >
+        ins_date = #{insDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="insUserId != null" >
+        ins_user_id = #{insUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updDate != null" >
+        upd_date = #{updDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updUserId != null" >
+        upd_user_id = #{updUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="delDate != null" >
+        del_date = #{delDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delUserId != null" >
+        del_user_id = #{delUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlg != null" >
+        delete_flg = #{deleteFlg,jdbcType=CHAR},
+      </if>
+    </set>
+    where customer_code = #{customerCode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.ts.business.model.MstCustomer" >
+    update mst_customer
+    set customer_name = #{customerName,jdbcType=VARCHAR},
+      customer_short_name = #{customerShortName,jdbcType=VARCHAR},
+      customer_area_no = #{customerAreaNo,jdbcType=VARCHAR},
+      customer_place_no = #{customerPlaceNo,jdbcType=VARCHAR},
+      customer_address = #{customerAddress,jdbcType=VARCHAR},
+      customer_atten = #{customerAtten,jdbcType=VARCHAR},
+      customer_atten_tel = #{customerAttenTel,jdbcType=VARCHAR},
+      share_flag = #{shareFlag,jdbcType=VARCHAR},
+      company_code = #{companyCode,jdbcType=VARCHAR},
+      sale_code = #{saleCode,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      dsp_order = #{dspOrder,jdbcType=VARCHAR},
+      attribute1 = #{attribute1,jdbcType=VARCHAR},
+      attribute2 = #{attribute2,jdbcType=VARCHAR},
+      attribute3 = #{attribute3,jdbcType=VARCHAR},
+      attribute4 = #{attribute4,jdbcType=VARCHAR},
+      attribute5 = #{attribute5,jdbcType=VARCHAR},
+      attribute6 = #{attribute6,jdbcType=VARCHAR},
+      attribute7 = #{attribute7,jdbcType=VARCHAR},
+      attribute8 = #{attribute8,jdbcType=VARCHAR},
+      attribute9 = #{attribute9,jdbcType=VARCHAR},
+      attribute10 = #{attribute10,jdbcType=VARCHAR},
+      ins_date = #{insDate,jdbcType=TIMESTAMP},
+      ins_user_id = #{insUserId,jdbcType=VARCHAR},
+      upd_date = #{updDate,jdbcType=TIMESTAMP},
+      upd_user_id = #{updUserId,jdbcType=VARCHAR},
+      del_date = #{delDate,jdbcType=TIMESTAMP},
+      del_user_id = #{delUserId,jdbcType=VARCHAR},
+      delete_flg = #{deleteFlg,jdbcType=CHAR}
+    where customer_code = #{customerCode,jdbcType=VARCHAR}
+  </update>
+</mapper>
